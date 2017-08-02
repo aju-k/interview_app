@@ -1,0 +1,27 @@
+<div class="row">
+  <h2>Get Shortest URL</h2>
+  <%= form_tag '/get_shortest_link', method: 'POST' do  %>
+      <%= text_field_tag :link, '',class: 'form-control', required: true, placeholder: 'http://abcd.com' %><br>
+      <%= submit_tag 'Search', class: 'btn btn-primary' %>
+  <% end %>
+</div>
+
+<div class="row">
+  <h3>Top 100 Most Visited URL's</h3>
+  <table class="table table-responsive table-bordered">
+    <tr>
+      <th>URL</th>
+      <th>Short link</th>
+      <th>Visit count</th>
+    </tr>
+    <% host = request.base_url %>
+    <% @most_visited_url.each do |link| %>
+      <tr>
+        <td><%= link.original_link %></td>
+        <td><%= genrate_url(host, link.unique_code) %></td>
+        <td><%= link.visit_count %></td>
+      </tr>
+    <% end %>
+    <%= will_paginate @most_visited_url %>
+  </table>
+</div>
